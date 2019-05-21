@@ -1,0 +1,12 @@
+﻿@{
+    ViewBag.Title = "Create";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3">@{Html.RenderAction("CreateBook");}</div>
+        <div class="col-lg-3">@{Html.RenderAction("CreateAuthor");}</div>
+        <div class="col-lg-3">@{Html.RenderAction("CreateGenre");}</div>
+        <div class="col-lg-3">@{Html.RenderAction("CreateLanguage");}</div>
+    </div>
+</div>

@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+
+
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Book/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    @using Library.Models
+    <div class="navbar navbar-expand-lg navbar-dark bg-dark" style="margin-bottom: 8px;">
+        <a class="navbar-brand" href="#">My Library</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar1" aria-controls="navbar1" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbar1">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    @Html.ActionLink("Books", "Books", new { controller = "Home" }, new { @class = "nav-link" })
+                </li>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item">
+                        @Html.ActionLink("MyBooks", "MyBooks", new { controller = "Home" }, new { @class = "nav-link" })
+                    </li>
+                    if (User.IsInRole("Admin"))
+                    {
+                        <li class="nav-item">
+                            @Html.ActionLink("Add", "Create", new { controller = "Home" }, new { @class = "nav-link" })
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Edit</a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown1">
+                                @Html.ActionLink("Books", "List", new { controller = "Home" }, new { @class = "dropdown-item" })
+                                @Html.ActionLink("Users", "ListUser", new { controller = "Home" }, new { @class = "dropdown-item" })
+                            </div>
+                        </li>
+                    }
+
+                }
+            </ul>
+            <ul class="navbar-nav my-2 my-lg-0">
+                @{
+                    if (!User.Identity.IsAuthenticated)
+                    {
+                        <li>
+                            @Html.ActionLink("Login", "StartPage", new { controller = "Account" }, new { @class = "nav-link" })
+                        </li>
+                        <li>
+                            @Html.ActionLink("Register", "StartPage", new { controller = "Account" }, new { @class = "nav-link" })
+                        </li>
+                    }
+                    else
+                    {
+                        using (BookContext db = new BookContext())
+                        {
+                            User user = db.Users.FirstOrDefault(x=>x.Email == User.Identity.Name);
+                            <li><a class="disabled nav-link active">Hello @user.FirstName @user.LastName</a></li>
+                        }
+                        using (Html.BeginForm("LogOff", "Account"))
+                        {
+                            <li><input type="submit" value="Log Off" class="btn nav-link" /></li>
+                        }
+                    }
+                }
+
+            </ul>
+        </div>
+    </div>
+    <div>
+        @RenderBody()
+    </div>
+    <footer class="container-fluid card-footer navbar-dark bg-dark">
+        <div class="container ">
+            <div class="text-center">
+                <h2 class="text-light">Follow me:</h2>
+            </div>
+            <div class="col-12 social text-center">
+                <a href="https://www.instagram.com/oleksandr_galiy/"><i class="fab fa-instagram"></i></a>
+                <a href="https://t.me/GalileyGG"><i class="fab fa-telegram"></i></a>
+                <a href="https://www.linkedin.com/in/oleksandr-galiy-6999a7183/"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.linkedin.com/in/oleksandr-galiy-6999a7183/"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </footer>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

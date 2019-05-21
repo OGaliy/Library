@@ -1,0 +1,106 @@
+﻿@using Library.Models
+@model IndexViewModel
+@{
+    ViewBag.Title = "Books";
+}
+<link  rel="stylesheet" type="text/css" href="~/Content/Main.css" />
+<div class="container-fluid">
+    <div class="col-md-12 row">
+        <div class="col-md-2 m-2">
+            <label for="toggle-1" class="btn btn-outline-secondary fbtn">Filtres</label>
+            <input type="checkbox" id="toggle-1" />
+            <div class="filters">
+                @using (Ajax.BeginForm("Books", new AjaxOptions { UpdateTargetId = "result" }))
+                {
+                    <div class="form">
+                        <div class="form-group">
+                            <label>Book's name:  </label>
+                            @Html.TextBox("name", Model.FilterViewModel.SelectedName, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label>Author:  </label>
+                            @Html.DropDownList("author", Model.FilterViewModel.Authors as SelectList, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label>Genre:   </label>
+                            @Html.DropDownList("genre", Model.FilterViewModel.Genres as SelectList, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label>Language:    </label>
+                            @Html.DropDownList("language", Model.FilterViewModel.Languages as SelectList, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Filter" class="form-control btn btn-success" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="col-md-9 container-fluid">
+            <div class="row" id="result">
+                @foreach (var item in Model.Books)
+                {
+                    <div class="col-md-4">
+                        <div class="dws">
+                            <div class="blockImg">
+                                @Html.Raw("<img class='imgMain' src=\"data:image/jpeg;base64," + Convert.ToBase64String(item.Image) + "\" />")
+
+                                <div class="blockText">
+                                    <div class="text">
+                                        <h5 class="col">Author: @item.Author.Name</h5>
+                                        <p class="col">Pages: @item.Pages</p>
+                                        <p class="col">Genre: @item.Genre.Name</p>
+                                        <p class="col">Language: @item.Language.Name</p>
+                                        <p class="col">About: @item.About</p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <div class="col-8 align-items-center">
+                                    @using (Html.BeginForm("AddMy", "Home", new { id = item.Id }))
+                                    {
+                                        if(!(ViewBag.Count < 6))
+                                        {
+                                            <input type="submit" class="btn btn-outline-secondary btn-block crBtn" disabled value="Add to my books" />
+                                        }
+                                        else
+                                        {
+                                            <input type="submit" class="btn btn-outline-secondary btn-block crBtn" value="Add to my books" />
+                                        }
+                                    }
+                                </div>
+
+                            }
+                        </div>
+
+                        <h5 class="col-12" style="margin-left: 18%;">@item.Name</h5>
+                    </div>
+                }
+            </div>
+
+        </div>
+
+    </div>
+    <div class="text-center">
+        @if (Model.PageViewModel.HasPreviousPage)
+        {
+            <a href="?name=@Model.FilterViewModel.SelectedName&author=@(Model.FilterViewModel.SelectedAuthor)&genre=@(Model.FilterViewModel.SelectedGenre)&language=@(Model.FilterViewModel.SelectedLanguage)&page=@(Model.PageViewModel.PageNumber - 1)"
+               class="btn btn-outline-secondary">
+                <
+            </a>
+        }
+        @if (Model.PageViewModel.HasNextPage)
+        {
+            <a href="?name=@Model.FilterViewModel.SelectedName&author=@(Model.FilterViewModel.SelectedAuthor)&genre=@(Model.FilterViewModel.SelectedGenre)&language=@(Model.FilterViewModel.SelectedLanguage)&page=@(Model.PageViewModel.PageNumber + 1)"
+               class="btn btn-outline-secondary">
+                >
+            </a>
+        }
+        <h6>Page @Model.PageViewModel.PageNumber of @Model.PageViewModel.TotalPages</h6>
+    </div>
+</div>

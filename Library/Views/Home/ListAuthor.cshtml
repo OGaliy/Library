@@ -1,0 +1,22 @@
+﻿@model IEnumerable<Library.Models.Author>
+
+<div class="container">
+
+    <h4 class="col text-center">@Html.DisplayNameFor(model => model.Name)</h4>
+    <div class="row">
+
+        @foreach (var item in Model)
+        {
+            <div class="col-3">
+                @Html.DisplayFor(modelItem => item.Name)
+                @Html.ActionLink("Edit", "EditAuthor", new { id = item.Id }) |
+                @using (Ajax.BeginForm("DeleteAuthor", new { id = item.Id }, new AjaxOptions
+                { Confirm = "Delete this book?" }))
+                {
+                    <input type="submit" value="delete" class="btn" />
+                }
+            </div>
+
+        }
+    </div>
+</div>

@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Account/css")
+</head>
+<body>
+        <div class="row align-content-center">
+            <ul class="nav nav-pills">
+                <li class="nav-item text-center">
+                    <a class="nav-link active" data-toggle="pill" href="#login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link align-items-center" data-toggle="pill" href="#register">Register</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                
+                <div class="tab-pane container active" id="login">
+                    @{Html.RenderPartial("Login");}
+                </div>
+                <div class="tab-pane container fade" id="register">
+                    @{Html.RenderPartial("Register");}
+                </div>
+            </div>
+        </div>
+    @RenderBody()
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

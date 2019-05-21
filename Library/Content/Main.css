@@ -1,0 +1,88 @@
+﻿.navbar {
+    font-family: DFGothic-EB,Arial, sans-serif;
+    margin-bottom: 8px;
+}
+.blockImg {
+    width: 300px;
+    height: 500px;
+    overflow: hidden;
+    background: #000;
+}
+
+.blockImg img {
+    width: 100%;
+    transition: .5s;
+}
+
+.dws:hover .blockImg img {
+    transform: rotate(-10deg) scale(1.3);
+    filter: blur(1px);
+    border-radius: 15px;
+    opacity: .5; 
+}
+
+.blockText {
+    width: 270px;
+    height: 400px;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    bottom: 20px;
+    opacity: 0;
+}
+
+.text {
+    color: #fff;
+    text-transform: uppercase;
+    padding: 0 10px;
+}
+
+.blockText::before,
+.blockText::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transition: .5s;
+}
+
+.dws:hover .blockText::before,
+.dws:hover .blockText::after {
+    transform: scale(1,1);
+}
+
+.dws:hover .blockText {
+    opacity: 1;
+}
+.dws:hover input {
+    opacity: 2;
+}
+
+.fbtn:active form {
+    display: none;
+}
+
+
+.imgMain {
+    width: 300px;
+    height: 500px;
+}
+
+.filters {
+    display: none;
+}
+
+input[type=checkbox] {
+    display: none;
+}
+
+input[type=checkbox]:checked ~ .filters {
+    display: block;
+}
+
+.fbtn{
+    cursor: pointer;
+}

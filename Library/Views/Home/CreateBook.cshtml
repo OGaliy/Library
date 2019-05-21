@@ -1,0 +1,85 @@
+﻿@model Library.Models.Book
+<div class="container">
+    <h4 class="col text-center">Book</h4>
+    @using (Html.BeginForm("CreateBook", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal border-dark">
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col" })
+                <div class="col">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Pages, htmlAttributes: new { @class = "control-label col" })
+                <div class="col">
+                    @Html.EditorFor(model => model.Pages, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Pages, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.About, htmlAttributes: new { @class = "control-label col" })
+                <div class="col">
+                    @Html.TextAreaFor(model => model.About, new { @class = "form-control-plaintext" })
+                    @Html.ValidationMessageFor(model => model.About, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.genreId, htmlAttributes: new { @class = "control-label col" })
+                <div class="col">
+                    @Html.DropDownListFor(model => model.genreId, ViewBag.Genre as SelectList, new { @class = "dropdown-item" })
+                    @Html.ValidationMessageFor(model => model.genreId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.authorId, htmlAttributes: new { @class = "control-label col" })
+                <div class="col">
+                    @Html.DropDownListFor(model => model.authorId, ViewBag.Author as SelectList, new { @class = "dropdown-item" })
+                    @Html.ValidationMessageFor(model => model.authorId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.languageId, htmlAttributes: new { @class = "control-label col" })
+                <div class="col">
+                    @Html.DropDownListFor(model => model.languageId, ViewBag.Language as SelectList, new { @class = "dropdown-item" })
+                    @Html.ValidationMessageFor(model => model.languageId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="editor-label col">Image file</div>
+                <div class="editor-field col">
+
+
+                    <input type="file" class="upload" name="uploadImage" accept="image/x-png,image/gif,image/jpeg" id="files" />
+                    <label for="files" class="form-control lb">Choose a file for Image!</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="editor-label col">Book file</div>
+                <div class="editor-field col">
+                    <input type="file" class="upload" name="uploadBook" id="files_b"/>
+
+                    <label for="files_b" class="form-control lb">Choose a file for book!</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col">
+                    <input type="submit" value="Save" class="btn btn-outline-secondary" />
+                </div>
+
+            </div>
+        </div>
+    }
+
+</div>

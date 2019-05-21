@@ -1,0 +1,52 @@
+﻿.upload {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+    .upload + label {
+        font-size: 1em;
+        font-weight: 700;
+        color: white;
+        background-color: cornflowerblue;
+        display: inline-block;
+        cursor: pointer;
+    }
+
+    .upload:focus + label,
+    .upload:hover + label {
+        background-color: red;
+    }
+
+    #About{
+        width:250px;
+    }
+
+.crBtn{
+    margin: 5px;
+}
+
+.social a {
+    font-size: 2em;
+    padding: 5px 10px 0px 10px;
+}
+
+.fa-telegram {
+    color: #0088cc;
+}
+
+.fa-instagram {
+    color: #e1306c;
+}
+
+.fa-linkedin {
+    color: #0e76a8;
+}
+
+    .fa-instagram:hover, .fa-linkedin:hover, .fa-telegram:hover, .fa-github:hover{
+        transform: scale(1.8);
+        cursor: pointer;
+    }

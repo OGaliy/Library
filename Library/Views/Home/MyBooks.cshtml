@@ -1,0 +1,58 @@
+﻿@model Library.Models.User
+
+@{
+    ViewBag.Title = "MyBooks";
+}
+@Styles.Render("~/Book/css")
+<h3 class="alert-info text-center">You can add only 6 book!</h3>
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model.books)
+        {
+            using (Library.Models.BookContext db = new Library.Models.BookContext())
+            {
+
+                <div class="col-4">
+                    <div class="dws">
+                        <div class="blockImg align-content-center">
+                            @Html.Raw("<img class='imgMain' src=\"data:image/jpeg;base64," + Convert.ToBase64String(item.Image) + "\" />")
+
+                            <div class="blockText">
+                                <div class="text">
+                                    <h5 class="col">Author: @db.Authors.Find(item.authorId).Name</h5>
+                                    <p class="col">Pages: @item.Pages</p>
+                                    <p class="col">Genre: @db.Genres.Find(item.genreId).Name</p>
+                                    <p class="col">Language: @db.Languages.Find(item.languageId).Name</p>
+                                    <p class="col">About: @item.About</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <div class="col-5">
+                                @using (Html.BeginForm("DeleteMy", "Home", new { id = item.Id }))
+                                {
+                                    <input type="submit" class="btn btn-outline-secondary btn-block crBtn" value="Delete" />
+                                }
+                            </div>
+                            <div class="col-5 float-right">
+                                @using (Html.BeginForm("GetBytes", "Home", new { id = item.Id }))
+                                {
+                                    <input type="submit" class="btn btn-outline-secondary btn-block crBtn" value="Read" />
+                                }
+                            </div>
+
+                        }
+                    </div>
+
+                    <h5 class="col-12" style="margin-left: 18%;">@item.Name</h5>
+                </div>
+            }
+
+        }
+    </div>
+</div>

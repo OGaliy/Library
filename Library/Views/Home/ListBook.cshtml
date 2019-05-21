@@ -1,0 +1,115 @@
+﻿@{
+    Layout = null;
+}
+
+@using Library.Models
+@model IndexViewModel
+    <div class="container-fluid">
+        <div class="col-md-12 row">
+            <div class="col-md-2 m-2">
+                @using (Ajax.BeginForm("List", new AjaxOptions { UpdateTargetId = "result" }))
+                {
+                    <div class="form">
+                        <div class="form-group">
+                            <label>Book's name:  </label>
+                            @Html.TextBox("name", Model.FilterViewModel.SelectedName, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label>Author:  </label>
+                            @Html.DropDownList("author", Model.FilterViewModel.Authors as SelectList, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label>Genre:   </label>
+                            @Html.DropDownList("genre", Model.FilterViewModel.Genres as SelectList, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <label>Language:    </label>
+                            @Html.DropDownList("language", Model.FilterViewModel.Languages as SelectList, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Filter" class="form-control btn btn-success" />
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="col-md-9 container-fluid">
+                <table class="table">
+                    <tr>
+                        <th>Image</th>
+                        <th>
+                            Title
+                        </th>
+                        <th>
+                            Author
+                        </th>
+                        <th>
+                            Pages
+                        </th>
+                        <th>
+                            About
+                        </th>
+                        <th>
+                            Genre
+                        </th>
+                        <th>
+                            Language
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model.Books)
+                    {
+                        <tr>
+                            <td>
+                                @Html.Raw("<img style='width:75px; height:100px;' src=\"data:image/jpeg;base64," + Convert.ToBase64String(item.Image) + "\" />")
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Author.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Pages)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.About)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Genre.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Language.Name)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "EditBook", new { id = item.Id }) |
+                                @using (Ajax.BeginForm("DeleteBook", new { id = item.Id }, new AjaxOptions
+                                { Confirm = "Delete this book?" }))
+                                {
+                                    <input type="submit" value="delete" class="btn" />
+                                }
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        @if (Model.PageViewModel.HasPreviousPage)
+        {
+            <a href="?name=@Model.FilterViewModel.SelectedName&author=@(Model.FilterViewModel.SelectedAuthor)&genre=@(Model.FilterViewModel.SelectedGenre)&language=@(Model.FilterViewModel.SelectedLanguage)&page=@(Model.PageViewModel.PageNumber - 1)"
+               class="btn btn-outline-secondary">
+                <
+            </a>
+        }
+        @if (Model.PageViewModel.HasNextPage)
+        {
+            <a href="?name=@Model.FilterViewModel.SelectedName&author=@(Model.FilterViewModel.SelectedAuthor)&genre=@(Model.FilterViewModel.SelectedGenre)&language=@(Model.FilterViewModel.SelectedLanguage)&page=@(Model.PageViewModel.PageNumber + 1)"
+               class="btn btn-outline-secondary">
+                >
+            </a>
+        }
+        <h6>Page @Model.PageViewModel.PageNumber of @Model.PageViewModel.TotalPages</h6>
+    </div>

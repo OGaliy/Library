@@ -1,0 +1,47 @@
+﻿@model Library.Models.LoginModel
+    <div>
+        @using (Html.BeginForm("Login", "Account"))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-horizontal">
+                <h4 class="heading">Login</h4>
+                <div class="form-group">
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @type = "email", @class = "form-control", @placeholder = "E-mail" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @type = "password", @class = "form-control", @placeholder = "Password" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Log In" class="btn btn-default" />
+                </div>
+
+            </div>
+        }
+    </div>
+@*<div class="tab-pane container active" id="login">
+            @using (Html.BeginForm("Login", "Account"))
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Email)
+                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @type = "email", @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Password)
+                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @type = "password", @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Ввійти" class="btn btn-default" />
+                    </div>
+
+                </div>
+            }
+        </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")*@

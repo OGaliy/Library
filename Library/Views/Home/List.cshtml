@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "List";
+}
+
+<div class="container">
+    <div>
+        @{Html.RenderAction("ListBook"); }
+    </div>
+
+    <div>
+        @{Html.RenderAction("ListAuthor"); }
+    </div>
+
+    <div>
+        @{Html.RenderAction("ListGenre"); }
+    </div>
+
+    <div>
+        @{Html.RenderAction("ListLanguage");}
+    </div>
+
+</div>
